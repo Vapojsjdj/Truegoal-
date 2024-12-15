@@ -68,47 +68,8 @@
             background-color: #2c2c2c;
             border-radius: 10px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
             height: 600px;
-        }
-
-        .chat-messages {
-            flex-grow: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background-color: #363636;
-        }
-
-        .chat-input-area {
-            padding: 15px;
-            background-color: #2c2c2c;
-            border-top: 1px solid #404040;
-        }
-
-        .chat-input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #404040;
-            color: white;
-            margin-bottom: 10px;
-        }
-
-        .chat-submit {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .chat-submit:hover {
-            background: linear-gradient(135deg, #2980b9, #2573a7);
+            position: relative;
         }
 
         .match-info {
@@ -117,6 +78,19 @@
             text-align: center;
             margin-bottom: 10px;
             border-radius: 5px;
+        }
+
+        .chat-title {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chat-frame {
+            width: 100%;
+            height: calc(100% - 40px);
+            border: none;
         }
 
         @media (max-width: 768px) {
@@ -157,47 +131,9 @@
         </div>
 
         <div class="chat-container">
-            <div class="chat-messages" id="chat-messages">
-                <!-- رسائل الدردشة ستظهر هنا -->
-            </div>
-            <div class="chat-input-area">
-                <input type="text" class="chat-input" placeholder="اكتب رسالتك هنا...">
-                <button class="chat-submit">إرسال</button>
-            </div>
+            <div class="chat-title">غرفة الدردشة</div>
+            <iframe class="chat-frame" src="https://city-vs-united.chatango.com/"></iframe>
         </div>
     </div>
-
-    <script>
-        // تفعيل البث المباشر تلقائياً عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            const playerContainer = document.querySelector('.player-wrapper');
-            const chatMessages = document.getElementById('chat-messages');
-            const chatInput = document.querySelector('.chat-input');
-            const chatSubmit = document.querySelector('.chat-submit');
-
-            // معالجة إرسال الرسائل في الدردشة
-            chatSubmit.addEventListener('click', function() {
-                const message = chatInput.value.trim();
-                if (message) {
-                    const messageElement = document.createElement('div');
-                    messageElement.style.padding = '8px';
-                    messageElement.style.marginBottom = '8px';
-                    messageElement.style.backgroundColor = '#404040';
-                    messageElement.style.borderRadius = '5px';
-                    messageElement.textContent = message;
-                    chatMessages.appendChild(messageElement);
-                    chatInput.value = '';
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }
-            });
-
-            // إرسال الرسالة عند الضغط على Enter
-            chatInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    chatSubmit.click();
-                }
-            });
-        });
-    </script>
 </body>
 </html>
