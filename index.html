@@ -3,101 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دردشة الأندية</title>
+    <title>دردشة جماعية احترافية</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background: #282c34;
+            background: #006400;
             color: white;
             margin: 0;
             padding: 10px;
+            text-align: center;
         }
         .container {
             max-width: 500px;
             margin: auto;
+            background: white;
             padding: 20px;
-            background: #444;
             border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 15px #00ff00;
+            color: #000;
         }
-        h1 {
-            color: #00ff00;
-            margin-bottom: 20px;
+        h1 { color: #fff; background: #004400; padding: 10px; border-radius: 5px; margin-bottom: 15px; }
+        #chat {
+            height: 300px; overflow-y: auto; background: #000; color: #00ff00;
+            padding: 10px; border: 2px solid #00ff00; margin-bottom: 15px;
         }
-        select, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #00ff00;
-            border-radius: 5px;
-            background: #000;
-            color: #00ff00;
-            font-size: 16px;
-            cursor: pointer;
+        .message {
+            display: flex; align-items: center; padding: 5px; margin-bottom: 10px;
+            border-bottom: 1px dashed #00ff00;
         }
-        .team-logo {
-            max-width: 100px;
-            margin: 20px auto;
+        .message img {
+            width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;
         }
+        .username {
+            font-weight: bold; color: #ff0; margin-right: 5px; cursor: pointer;
+        }
+        .input-container input, button, label, select {
+            width: 100%; padding: 10px; margin: 5px 0; font-size: 16px;
+            border: 2px solid #00ff00; background: #000; color: #00ff00;
+        }
+        button { background: #004400; cursor: pointer; }
+        button:hover { background: #007700; }
+        .profile-box {
+            text-align: center; margin-bottom: 10px;
+        }
+        .profile-box img {
+            width: 100px; height: 100px; border-radius: 50%; margin-bottom: 5px;
+        }
+        #online-count { font-size: 18px; color: #ff0; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>اختر ناديك المفضل</h1>
-        <select id="team-selector">
-            <option value="">-- اختر النادي --</option>
-        </select>
-        <div id="team-info">
-            <img id="team-logo" class="team-logo" src="" alt="شعار النادي">
-            <p id="team-name"></p>
-        </div>
-        <button onclick="selectTeam()">تأكيد الاختيار</button>
+
+<div class="container">
+    <h1>دردشة جماعية احترافية</h1>
+
+    <div id="online-count">المتصلون الآن: <span id="user-count">0</span></div>
+
+    <div class="profile-box">
+        <img id="profile-image" src="https://picsum.photos/100" alt="صورة شخصية">
+        <label>
+            تغيير الصورة الشخصية:
+            <input type="file" id="upload-image" accept="image/*">
+        </label>
+        <br>
+        <label>
+            اختر ناديك المفضل:
+            <select id="team-selector">
+                <option value="">-- اختر ناديك --</option>
+            </select>
+        </label>
     </div>
 
-    <script>
-        const teamSelector = document.getElementById('team-selector');
-        const teamLogo = document.getElementById('team-logo');
-        const teamName = document.getElementById('team-name');
+    <div id="chat"></div>
 
-        // رابط JSON
-        const jsonURL = 'https://raw.githubusercontent.com/Vapojsjdj/Truegoal-/refs/heads/main/teams.json';
+    <div class="input-container">
+        <input id="message" type="text" placeholder="اكتب رسالتك هنا">
+        <button id="send">إرسال</button>
+    </div>
+</div>
 
-        // جلب بيانات الأندية
-        fetch(jsonURL)
-            .then(response => response.json())
-            .then(data => {
-                for (const teamId in data) {
-                    const team = data[teamId];
-                    const option = document.createElement('option');
-                    option.value = teamId;
-                    option.textContent = team.name;
-                    teamSelector.appendChild(option);
-                }
-            })
-            .catch(error => {
-                console.error('خطأ في جلب البيانات:', error);
-            });
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 
-        // عرض بيانات النادي عند الاختيار
-        teamSelector.addEventListener('change', () => {
-            const selectedTeam = teamSelector.value;
-            fetch(jsonURL)
-                .then(response => response.json())
-                .then(data => {
-                    if (data[selectedTeam]) {
-                        teamLogo.src = data[selectedTeam].logo;
-                        teamName.textContent = data[selectedTeam].name;
-                    } else {
-                        teamLogo.src = '';
-                        teamName.textContent = '';
-                    }
-                });
-        });
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDMhVxUQsssXRd2DL-cSly2FlvfkLM6_Y",
+        authDomain: "chatlive-22a86.firebaseapp.com",
+        projectId: "chatlive-22a86",
+        storageBucket: "chatlive-22a86.appspot.com",
+        messagingSenderId: "63086342359",
+        appId: "1:63086342359:web:e65a614df7f0f8e137c092"
+    };
 
-        function selectTeam() {
-            alert('تم اختيار النادي: ' + teamName.textContent);
+    // Firebase initialization
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const messagesRef = collection(db, "messages");
+
+    const chat = document.getElementById('chat');
+    const messageInput = document.getElementById('message');
+    const sendButton = document.getElementById('send');
+    const profileImage = document.getElementById('profile-image');
+    const uploadImage = document.getElementById('upload-image');
+    const teamSelector = document.getElementById('team-selector');
+    const userCount = document.getElementById('user-count');
+
+    let username = localStorage.getItem("username") || prompt("أدخل اسم المستخدم:");
+    localStorage.setItem("username", username);
+
+    let userTeam = localStorage.getItem("userTeam") || "";
+    teamSelector.value = userTeam;
+
+    teamSelector.addEventListener('change', () => {
+        userTeam = teamSelector.value;
+        localStorage.setItem("userTeam", userTeam);
+    });
+
+    uploadImage.addEventListener('change', () => {
+        const file = uploadImage.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                profileImage.src = reader.result;
+            };
+            reader.readAsDataURL(file);
         }
-    </script>
+    });
+
+    async function sendMessage() {
+        const text = messageInput.value.trim();
+        if (text) {
+            await addDoc(messagesRef, {
+                name: username,
+                text: text,
+                profileImage: profileImage.src,
+                team: userTeam,
+                timestamp: serverTimestamp()
+            });
+            messageInput.value = '';
+        }
+    }
+
+    async function loadTeams() {
+        const response = await fetch("https://raw.githubusercontent.com/Vapojsjdj/Truegoal-/refs/heads/main/teams.json");
+        const teams = await response.json();
+        for (const team of teams) {
+            const option = document.createElement('option');
+            option.value = team.id;
+            option.textContent = team.name;
+            teamSelector.appendChild(option);
+        }
+    }
+
+    function renderMessages(messages) {
+        chat.innerHTML = '';
+        messages.forEach(msg => {
+            chat.innerHTML += `
+                <div class="message">
+                    <img src="${msg.profileImage}" alt="صورة">
+                    <div>
+                        <span class="username">${msg.name}</span>: ${msg.text}
+                    </div>
+                </div>`;
+        });
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    const q = query(messagesRef, orderBy("timestamp", "asc"));
+    onSnapshot(q, (snapshot) => {
+        const messages = snapshot.docs.map(doc => doc.data());
+        renderMessages(messages);
+        userCount.textContent = snapshot.docs.length;
+    });
+
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    // Load teams from JSON file
+    loadTeams();
+</script>
+
 </body>
 </html>
