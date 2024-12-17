@@ -19,7 +19,7 @@
         "name": "بايرن ميونخ",
         "logo": "https://upload.wikimedia.org/wikipedia/en/1/1f/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg"
     }
-}{
+
     "boca_juniors": {
         "name": "بوكا جونيورز",
         "logo": "https://upload.wikimedia.org/wikipedia/en/f/f5/Boca_Juniors_logo18.svg"
@@ -40,7 +40,7 @@
         "name": "سانتوس",
         "logo": "https://upload.wikimedia.org/wikipedia/en/1/10/Santos_logo.svg"
     }
-}{
+
     "al_hilal": {
         "name": "الهلال",
         "logo": "https://upload.wikimedia.org/wikipedia/en/9/92/Al-Hilal_FC_logo.svg"
@@ -61,7 +61,7 @@
         "name": "كاشيما أنتلرز",
         "logo": "https://upload.wikimedia.org/wikipedia/en/d/d8/Kashima_Antlers_logo.svg"
     }
-}{
+
     "al_ahly": {
         "name": "الأهلي",
         "logo": "https://upload.wikimedia.org/wikipedia/en/0/04/Al_Ahly_SC_Logo.png"
@@ -82,8 +82,8 @@
         "name": "الرجاء",
         "logo": "https://upload.wikimedia.org/wikipedia/en/4/41/Raja_CA_logo.png"
     }
-}{
-    "club_america": {
+
+  "club_america": {
         "name": "كلوب أمريكا",
         "logo": "https://upload.wikimedia.org/wikipedia/en/2/2e/Club_Am%C3%A9rica_logo.svg"
     },
