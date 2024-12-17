@@ -14,5 +14,93 @@
     "liverpool": {
         "name": "ليفربول",
         "logo": "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg"
+    },
+    "bayern_munich": {
+        "name": "بايرن ميونخ",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/1/1f/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg"
+    }
+}{
+    "boca_juniors": {
+        "name": "بوكا جونيورز",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/f/f5/Boca_Juniors_logo18.svg"
+    },
+    "river_plate": {
+        "name": "ريفر بليت",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/CA_River_Plate_logo_%28p%C3%B3stula%29.svg/800px-CA_River_Plate_logo_%28p%C3%B3stula%29.svg.png"
+    },
+    "flamengo": {
+        "name": "فلامينغو",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Flamengo_logo.svg/800px-Flamengo_logo.svg.png"
+    },
+    "palmeiras": {
+        "name": "بالميراس",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Escudo_SE_Palmeiras.svg/800px-Escudo_SE_Palmeiras.svg.png"
+    },
+    "santos": {
+        "name": "سانتوس",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/1/10/Santos_logo.svg"
+    }
+}{
+    "al_hilal": {
+        "name": "الهلال",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/9/92/Al-Hilal_FC_logo.svg"
+    },
+    "al_nassr": {
+        "name": "النصر",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/7/7b/Al-Nassr_FC_logo_%282022%29.svg"
+    },
+    "al_ittihad": {
+        "name": "الاتحاد",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/1/15/Al-Ittihad_Club_logo.svg"
+    },
+    "jeonbuk_hyundai": {
+        "name": "جيونبوك هيونداي",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/6/6f/Jeonbuk_Hyundai_Motors_FC_logo.svg"
+    },
+    "kashima_antlers": {
+        "name": "كاشيما أنتلرز",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/d/d8/Kashima_Antlers_logo.svg"
+    }
+}{
+    "al_ahly": {
+        "name": "الأهلي",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/0/04/Al_Ahly_SC_Logo.png"
+    },
+    "zamalk": {
+        "name": "الزمالك",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/a/a4/Zamalek_SC_logo.png"
+    },
+    "esperance": {
+        "name": "الترجي",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/0/0a/Esp%C3%A9rance_Sportive_de_Tunis_logo.png"
+    },
+    "wydad": {
+        "name": "الوداد",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/0/05/Wydad_Casablanca_logo.png"
+    },
+    "raja": {
+        "name": "الرجاء",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/4/41/Raja_CA_logo.png"
+    }
+}{
+    "club_america": {
+        "name": "كلوب أمريكا",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/2/2e/Club_Am%C3%A9rica_logo.svg"
+    },
+    "guadalajara": {
+        "name": "غوادالاخارا",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/4/45/Chivas_de_Guadalajara_logo.svg"
+    },
+    "la_galaxy": {
+        "name": "لوس أنجلوس غالاكسي",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/d/df/Los_Angeles_Galaxy_logo.svg"
+    },
+    "seattle_sounders": {
+        "name": "سياتل ساوندرز",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/3/36/Seattle_Sounders_FC.svg"
+    },
+    "toronto_fc": {
+        "name": "تورونتو إف سي",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/5/5c/Toronto_FC_Logo.svg"
     }
 }
