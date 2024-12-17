@@ -1,0 +1,18 @@
+{
+    "real_madrid": {
+        "name": "ريال مدريد",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg"
+    },
+    "barcelona": {
+        "name": "برشلونة",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg"
+    },
+    "manchester_united": {
+        "name": "مانشستر يونايتد",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg"
+    },
+    "liverpool": {
+        "name": "ليفربول",
+        "logo": "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg"
+    }
+}
