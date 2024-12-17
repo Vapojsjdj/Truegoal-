@@ -1,340 +1,184 @@
-<html><head><base href="/" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>بث مباشر - مباريات كرة القدم</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
-    
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دردشة جماعية ★ متوهجة</title>
+  <style>
     * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Cairo', sans-serif;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-        background-color: #0f172a;
-        color: white;
+      font-family: "Comic Sans MS", "Arial", sans-serif;
+      background: linear-gradient(45deg, #000080, #000099);
+      color: white;
+      text-align: center;
+      padding: 20px;
     }
 
-    .header {
-        background: linear-gradient(135deg, #1e3a8a, #2563eb);
-        padding: 20px;
-        text-align: center;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        position: relative;
-        overflow: hidden;
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: rgba(0, 0, 50, 0.8);
+      border: 3px solid #ff0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffff;
     }
 
-    .header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+    h1 {
+      text-shadow: 2px 2px #ff0, -2px -2px #0f0;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
 
-    .header h1 {
-        position: relative;
-        z-index: 1;
-        font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    #chat {
+      height: 350px;
+      overflow-y: auto;
+      background: #000;
+      padding: 10px;
+      border: 2px solid #0f0;
+      margin-bottom: 15px;
+      font-size: 16px;
+      color: #0f0;
+      text-align: left;
     }
 
-    .stats-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 10px;
+    .message {
+      padding: 5px;
+      border-bottom: 1px dashed #003300;
+      margin-bottom: 10px;
     }
 
-    .stat-box {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 5px 15px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+    .message-name {
+      color: #ff0;
+      font-weight: bold;
     }
 
-    .online-dot {
-        width: 8px;
-        height: 8px;
-        background-color: #22c55e;
-        border-radius: 50%;
-        animation: pulse 1.5s infinite;
+    .message-time {
+      color: #888;
+      font-size: 0.8em;
     }
 
-    .main-container {
-        max-width: 1400px;
-        margin: 20px auto;
-        padding: 20px;
-        display: grid;
-        grid-template-columns: 1fr 350px;
-        gap: 30px;
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #0f0;
+      background: #000;
+      border: 2px solid #0f0;
     }
 
-    .stream-container {
-        background: linear-gradient(to bottom, #1e293b, #0f172a);
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        border: 1px solid rgba(255,255,255,0.1);
+    #send {
+      background: #00f;
+      color: white;
+      cursor: pointer;
     }
 
-    .stream-title {
-        background: linear-gradient(135deg, #dc2626, #991b1b);
-        padding: 15px;
-        text-align: center;
-        font-weight: bold;
-        letter-spacing: 0.5px;
+    #send:hover {
+      background: #00a;
     }
 
-    .player-wrapper {
-        position: relative;
-        padding-top: 56.25%;
-        background-color: #000;
+    .emoji-panel {
+      margin-bottom: 10px;
     }
 
-    .player-wrapper iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
+    .emoji-btn {
+      font-size: 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
     }
 
-    .match-info {
-        background: linear-gradient(135deg, #1d4ed8, #2563eb);
-        padding: 15px;
-        text-align: center;
-        margin: 10px;
-        border-radius: 8px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .match-info::before {
-        content: '🏆';
-        font-size: 1.2em;
-    }
-
-    .chat-container {
-        background: linear-gradient(to bottom, #1e293b, #0f172a);
-        border-radius: 15px;
-        overflow: hidden;
-        height: calc(100vh - 140px);
-        position: relative;
-        border: 1px solid rgba(255,255,255,0.1);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    .chat-title {
-        background: linear-gradient(135deg, #dc2626, #991b1b);
-        padding: 15px;
-        text-align: center;
-        font-weight: bold;
-        letter-spacing: 0.5px;
-    }
-
-    .chat-frame {
-        width: 100%;
-        height: calc(100% - 50px);
-        border: none;
-        background: rgba(0,0,0,0.2);
-    }
-
-    .visitor-info {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .country-flag {
-        width: 20px;
-        height: 15px;
-        border-radius: 2px;
-        object-fit: cover;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.2); opacity: 0.7; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0.4; }
-        100% { opacity: 1; }
-    }
-
-    .live-indicator {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(220, 38, 38, 0.2);
-        padding: 5px 15px;
-        border-radius: 20px;
-        margin: 10px;
-    }
-
-    .live-dot {
-        width: 8px;
-        height: 8px;
-        background-color: #ef4444;
-        border-radius: 50%;
-        animation: blink 1s infinite;
-    }
-
-    .traffic-counter {
-        background: linear-gradient(to bottom, #1e293b, #0f172a);
-        border-radius: 15px;
-        padding: 20px;
-        margin: 20px auto;
-        max-width: 1400px;
-        text-align: center;
-        border: 1px solid rgba(255,255,255,0.1);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (max-width: 1024px) {
-        .main-container {
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-            padding: 10px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .main-container {
-            grid-template-columns: 1fr;
-        }
-
-        .chat-container {
-            height: 400px;
-        }
-
-        .header {
-            padding: 15px;
-        }
-
-        body {
-            font-size: 14px;
-        }
-    }
-</style>
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>بث مباشر لمباريات كرة القدم</h1>
-        <div class="stats-container">
-            <div class="stat-box">
-                <span>زوار الموقع:</span>
-                <span id="totalVisitors">0</span>
-            </div>
-            <div class="stat-box">
-                <div class="online-dot"></div>
-                <span>متصل الآن:</span>
-                <div class="visitor-info">
-                    <span id="onlineUsers">0</span>
-                    <img id="visitorFlag" class="country-flag" src="" alt="visitor country" style="display: none;">
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <h1>دردشة جماعية ★ متوهجة</h1>
+
+    <div class="emoji-panel">
+      <button class="emoji-btn" onclick="addEmoji('😊')">😊</button>
+      <button class="emoji-btn" onclick="addEmoji('😂')">😂</button>
+      <button class="emoji-btn" onclick="addEmoji('❤️')">❤️</button>
+      <button class="emoji-btn" onclick="addEmoji('👍')">👍</button>
     </div>
 
-    <div class="main-container">
-        <div class="stream-container">
-            <div class="stream-title">
-                البث المباشر
-                <div class="live-indicator">
-                    <span class="live-dot"></span>
-                    مباشر
-                </div>
+    <div id="chat"></div>
+
+    <input id="username" type="text" placeholder="اسم المستخدم">
+    <input id="message" type="text" placeholder="اكتب رسالتك هنا">
+    <button id="send">إرسال</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDMhVx...",
+      authDomain: "chatlive-22a86.firebaseapp.com",
+      projectId: "chatlive-22a86",
+      storageBucket: "chatlive-22a86.appspot.com",
+      messagingSenderId: "63086342359",
+      appId: "1:63086342359:web:e65a614df7f0f8e137c092"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const messagesRef = collection(db, "messages");
+
+    const chat = document.getElementById('chat');
+    const messageInput = document.getElementById('message');
+    const usernameInput = document.getElementById('username');
+    const sendButton = document.getElementById('send');
+
+    const addEmoji = (emoji) => {
+      messageInput.value += emoji;
+      messageInput.focus();
+    };
+
+    const loadMessages = () => {
+      const q = query(messagesRef, orderBy("timestamp", "asc"));
+      onSnapshot(q, (snapshot) => {
+        chat.innerHTML = '';
+        snapshot.forEach(doc => {
+          const { name, text, timestamp } = doc.data();
+          const time = timestamp?.toDate().toLocaleTimeString() || 'غير معروف';
+          chat.innerHTML += `
+            <div class="message">
+              <span class="message-name">${name || "مجهول"}:</span> ${text}
+              <span class="message-time">(${time})</span>
             </div>
-            <div class="match-info">
-             الدوري الاسباني - برشلونة و ليجانيس بث مباشر 
-            </div>
-            <div class="player-wrapper">
-                <iframe allowfullscreen="true" scrolling="no" src="https://sp.naba24.net/albaplayer/ben1/?serv=1"></iframe>
-            </div>
-        </div>
+          `;
+        });
+        chat.scrollTop = chat.scrollHeight;
+      });
+    };
 
-        <div class="chat-container">
-            <div class="chat-title">غرفة الدردشة المباشرة</div>
-            <iframe class="chat-frame" src="https://city-vs-united.chatango.com/"></iframe>
-        </div>
-    </div>
+    const sendMessage = async () => {
+      const text = messageInput.value.trim();
+      const username = usernameInput.value.trim() || "مجهول";
+      if (text) {
+        await addDoc(messagesRef, {
+          name: username,
+          text: text,
+          timestamp: serverTimestamp(),
+        });
+        messageInput.value = '';
+      }
+    };
 
-    <div class="traffic-counter">
-        <a href="https://www.flagcounter.me/details/fio"><img src="https://www.flagcounter.me/fio/" alt="Flag Counter"></a>
-    </div>
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
 
-    <script>
-        // Generate random numbers with error handling
-        try {
-            const totalVisitors = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
-            const totalVisitorsElement = document.getElementById('totalVisitors');
-            if (totalVisitorsElement) {
-                totalVisitorsElement.textContent = totalVisitors;
-            }
-
-            const initialOnlineUsers = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
-            let onlineUsers = initialOnlineUsers;
-            
-            const onlineUsersElement = document.getElementById('onlineUsers');
-            if (onlineUsersElement) {
-                onlineUsersElement.textContent = onlineUsers;
-            }
-
-            // Update online users with error handling
-            setInterval(() => {
-                try {
-                    const fluctuation = Math.floor(Math.random() * 11) - 5;
-                    onlineUsers += fluctuation;
-                    
-                    if (onlineUsers < 100) onlineUsers = 100;
-                    if (onlineUsers > 500) onlineUsers = 500;
-                    
-                    const element = document.getElementById('onlineUsers');
-                    if (element) {
-                        element.textContent = onlineUsers;
-                    }
-                } catch (error) {
-                    console.error('Error updating online users:', error);
-                }
-            }, 30000);
-
-            // Fetch visitor's country with error handling
-            fetch('https://ipapi.co/json/')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const flagElement = document.getElementById('visitorFlag');
-                    if (flagElement && data.country_code) {
-                        flagElement.src = `https://flagcdn.com/w20/${data.country_code.toLowerCase()}.png`;
-                        flagElement.style.display = 'inline-block';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching country:', error);
-                });
-
-        } catch (error) {
-            console.error('Error in initialization:', error);
-        }
-    </script>
+    loadMessages();
+  </script>
 </body>
 </html>
