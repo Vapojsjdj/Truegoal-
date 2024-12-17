@@ -1,0 +1,681 @@
+<html><head><base href="." />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>عالم كرة القدم - موقع رياضي</title>
+<style>
+    body {
+        font-family: Tahoma, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        direction: rtl;
+        background: #f0f0f0;
+    }
+
+    .header {
+        background: linear-gradient(to bottom, #006400, #004d00);
+        padding: 10px;
+        text-align: center;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .nav-button {
+        background: #004d00;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .nav-button:hover {
+        background: #008800;
+    }
+
+    .match-banner {
+        background: white;
+        padding: 15px;
+        text-align: center;
+        border-bottom: 2px solid #004d00;
+    }
+
+    .teams {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        font-size: 1.2em;
+        padding: 10px;
+        background: white;
+        margin-bottom: 15px;
+    }
+
+    .team-logo {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .video-section {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .video-box {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 10px;
+        min-height: 300px;
+    }
+
+    .chat-box {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 10px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 10px;
+        background: #f9f9f9;
+        margin-bottom: 10px;
+    }
+
+    .chat-input {
+        display: flex;
+        gap: 10px;
+    }
+
+    .chat-input input {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .chat-input button {
+        padding: 8px 15px;
+        background: #004d00;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .info-panels {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .info-panel {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 15px;
+    }
+
+    .info-title {
+        background: #004d00;
+        color: white;
+        padding: 8px;
+        margin: -15px -15px 15px -15px;
+        text-align: center;
+    }
+
+    .visitor-count {
+        text-align: center;
+        padding: 10px;
+        background: #004d00;
+        color: white;
+        margin: 15px 0;
+    }
+
+    .footer {
+        background: #004d00;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .league-standings {
+        margin-top: 15px;
+    }
+
+    .standings-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .standings-table th,
+    .standings-table td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .standings-table th {
+        background-color: #004d00;
+        color: white;
+    }
+
+    .standings-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .player-image {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        margin: 10px auto;
+        display: block;
+        border-radius: 10px;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .social-icon {
+        color: white;
+        font-size: 24px;
+        transition: transform 0.3s;
+    }
+
+    .social-icon:hover {
+        transform: scale(1.2);
+    }
+
+    .lineup-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .team-button {
+        background: #004d00;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        flex: 1;
+    }
+
+    .team-button:hover {
+        background: #006600;
+    }
+
+    .team-button.active {
+        background: #008800;
+    }
+
+    .team-lineup {
+        display: none;
+    }
+
+    .team-lineup.active {
+        display: block;
+    }
+
+    .lineup-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        text-align: center;
+    }
+
+    .player-item {
+        background: #f5f5f5;
+        padding: 8px;
+        border-radius: 4px;
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            position: relative;
+            max-height: none;
+        }
+
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .nav-button {
+            width: auto;
+            margin: 0;
+            padding: 8px 5px;
+            font-size: 0.9em;
+        }
+
+        .main-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .teams {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-box {
+            height: 250px;
+        }
+
+        .video-box {
+            min-height: 200px;
+        }
+
+        .info-panel {
+            padding: 10px;
+        }
+
+        .info-title {
+            margin: -10px -10px 10px -10px;
+            padding: 5px;
+        }
+    }
+    
+    .theme-toggles {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .theme-button {
+        background: #004d00;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .theme-button:hover {
+        background: #006600;
+    }
+
+    .theme-button i {
+        font-size: 14px;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+
+    body.dark-mode .header {
+        background: linear-gradient(to bottom, #000000, #1a1a1a);
+    }
+
+    body.dark-mode .nav-button {
+        background: #333333;
+    }
+
+    body.dark-mode .nav-button:hover {
+        background: #444444;
+    }
+
+    body.dark-mode .match-banner,
+    body.dark-mode .video-box,
+    body.dark-mode .chat-box,
+    body.dark-mode .info-panel {
+        background: #2d2d2d;
+        border-color: #404040;
+    }
+
+    body.dark-mode .chat-messages {
+        background: #363636;
+    }
+
+    body.dark-mode .chat-input input {
+        background: #404040;
+        border-color: #555555;
+        color: white;
+    }
+
+    body.dark-mode .info-title {
+        background: #333333;
+    }
+
+    body.dark-mode .standings-table th {
+        background-color: #333333;
+    }
+
+    body.dark-mode .standings-table td {
+        border-color: #404040;
+    }
+
+    body.dark-mode .standings-table tr:nth-child(even) {
+        background-color: #363636;
+    }
+
+    body.dark-mode .player-item {
+        background: #363636;
+    }
+
+    /* Blue Theme Classes */
+    body.blue-theme .header {
+        background: linear-gradient(to bottom, #003366, #002244);
+    }
+
+    body.blue-theme .nav-button,
+    body.blue-theme .chat-input button,
+    body.blue-theme .theme-button,
+    body.blue-theme .info-title,
+    body.blue-theme .standings-table th,
+    body.blue-theme .team-button {
+        background: #003366;
+    }
+
+    body.blue-theme .nav-button:hover,
+    body.blue-theme .chat-input button:hover,
+    body.blue-theme .theme-button:hover,
+    body.blue-theme .team-button:hover {
+        background: #004488;
+    }
+
+    body.blue-theme .team-button.active {
+        background: #0055aa;
+    }
+
+    body.blue-theme .visitor-count,
+    body.blue-theme .footer {
+        background: #003366;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <h1>عالم كرة القدم</h1>
+        <div class="social-icons">
+            <a href="https://facebook.com" class="social-icon" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://twitter.com" class="social-icon" target="_blank">
+                <i class="fab fa-x-twitter"></i>
+            </a>
+            <a href="https://instagram.com" class="social-icon" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <div class="theme-toggles">
+            <button id="darkModeToggle" class="theme-button">
+                <i class="fas fa-moon"></i>
+                وضع ليلي
+            </button>
+            <button id="colorThemeToggle" class="theme-button">
+                <i class="fas fa-palette"></i>
+                تغيير اللون
+            </button>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-button">الرئيسية</button>
+            <button class="nav-button">أخبار</button>
+            <button class="nav-button">مباريات</button>
+            <button class="nav-button">نتائج</button>
+            <button class="nav-button">إحصائيات</button>
+            <button class="nav-button">بث مباشر</button>
+        </div>
+    </div>
+
+    <div class="match-banner">
+        <div class="teams">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png" class="team-logo" alt="Barcelona">
+            <span>برشلونة</span>
+            <span class="score">0 - 0</span>
+            <span>ريال مدريد</span>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/1200px-Real_Madrid_CF.svg.png" class="team-logo" alt="Real Madrid">
+        </div>
+    </div>
+
+    <div class="visitor-count">
+        عدد الزوار: <span id="visitorCount">1,234</span>
+    </div>
+
+    <div class="main-content">
+        <div class="video-section">
+            <div class="video-box">
+                <div class="info-title">البث المباشر</div>
+                <div style="height: 250px; display: flex; align-items: center; justify-content: center; background: #eee;">
+                    بث مباشر للمباراة
+                </div>
+            </div>
+            <div class="chat-box">
+                <div class="info-title">الدردشة المباشرة</div>
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be inserted here -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا...">
+                    <button onclick="sendMessage()">إرسال</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-panels">
+            <div class="info-panel">
+                <div class="info-title">معلومات المباراة</div>
+                <p>الملعب: سانتياغو برنابيو</p>
+                <p>التوقيت: 21:00 بتوقيت مكة المكرمة</p>
+                <p>البطولة: الدوري الإسباني</p>
+                <img src="https://example.com/madison-image.jpg" alt="جيمس ماديسون" class="player-image">
+            </div>
+
+            <div class="info-panel">
+                <div class="info-title">التشكيلة الأساسية</div>
+                <div class="lineup-buttons">
+                    <button class="team-button" onclick="showTeam('real')">ريال مدريد</button>
+                    <button class="team-button" onclick="showTeam('barca')">برشلونة</button>
+                </div>
+                <div class="team-lineup" id="real-lineup">
+                    <div class="lineup-grid">
+                        <div class="player-item">كورتوا</div>
+                        <div class="player-item">كارفخال</div>
+                        <div class="player-item">ميليتاو</div>
+                        <div class="player-item">ألابا</div>
+                        <div class="player-item">ميندي</div>
+                        <div class="player-item">كروس</div>
+                        <div class="player-item">مودريتش</div>
+                        <div class="player-item">فالفيردي</div>
+                        <div class="player-item">بيلينغهام</div>
+                        <div class="player-item">فينيسيوس</div>
+                        <div class="player-item">رودريغو</div>
+                    </div>
+                </div>
+                <div class="team-lineup" id="barca-lineup">
+                    <div class="lineup-grid">
+                        <div class="player-item">تير شتيغن</div>
+                        <div class="player-item">أراوخو</div>
+                        <div class="player-item">كوندي</div>
+                        <div class="player-item">بالدي</div>
+                        <div class="player-item">كانسيلو</div>
+                        <div class="player-item">غوندوغان</div>
+                        <div class="player-item">دي يونغ</div>
+                        <div class="player-item">بيدري</div>
+                        <div class="player-item">يامال</div>
+                        <div class="player-item">ليفاندوفسكي</div>
+                        <div class="player-item">فيران</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <div class="info-title">ترتيب الدوري</div>
+                <div class="league-standings">
+                    <table class="standings-table">
+                        <tr>
+                            <th>#</th>
+                            <th>الفريق</th>
+                            <th>نقاط</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>ريال مدريد</td>
+                            <td>45</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>برشلونة</td>
+                            <td>44</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>أتلتيكو مدريد</td>
+                            <td>41</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>إشبيلية</td>
+                            <td>36</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div>
+            <h3>عالم كرة القدم</h3>
+            <p>موقعك الأول لمتابعة أخبار كرة القدم العالمية</p>
+            <p>جميع الحقوق محفوظة © 2024</p>
+            <p>تواصل معنا: info@football-world.com</p>
+        </div>
+    </footer>
+
+    <script>
+        let visitorCount = 1234;
+        setInterval(() => {
+            visitorCount += Math.floor(Math.random() * 3);
+            document.getElementById('visitorCount').textContent = visitorCount.toLocaleString('ar-SA');
+        }, 5000);
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message;
+                messageElement.style.padding = '5px';
+                messageElement.style.margin = '5px 0';
+                messageElement.style.background = '#e8e8e8';
+                messageElement.style.borderRadius = '5px';
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                input.value = '';
+            }
+        }
+
+        document.querySelector('#messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('تم النقر على: ' + this.textContent);
+            });
+        });
+
+        function showTeam(team) {
+            // Hide all lineups
+            document.querySelectorAll('.team-lineup').forEach(lineup => {
+                lineup.style.display = 'none';
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.team-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected team lineup
+            const selectedLineup = document.getElementById(`${team}-lineup`);
+            selectedLineup.style.display = 'block';
+            
+            // Add active class to clicked button
+            const button = event.target;
+            button.classList.add('active');
+        }
+
+        // Show Real Madrid lineup by default
+        window.addEventListener('load', () => {
+            showTeam('real');
+            document.querySelector('.team-button').classList.add('active');
+        });
+
+        function initializeThemes() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const colorThemeToggle = document.getElementById('colorThemeToggle');
+            
+            // Dark Mode Toggle
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                // Save preference
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode);
+            });
+            
+            // Color Theme Toggle
+            colorThemeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('blue-theme');
+                // Save preference
+                const isBlueTheme = document.body.classList.contains('blue-theme');
+                localStorage.setItem('blueTheme', isBlueTheme);
+            });
+            
+            // Load saved preferences
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            
+            if (localStorage.getItem('blueTheme') === 'true') {
+                document.body.classList.add('blue-theme');
+            }
+        }
+
+        // Initialize themes when page loads
+        window.addEventListener('load', initializeThemes);
+    </script>
+</body>
+</html>
