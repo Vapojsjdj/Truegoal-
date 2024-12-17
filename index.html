@@ -1,184 +1,103 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>دردشة جماعية ★ متوهجة</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Comic Sans MS", "Arial", sans-serif;
-      background: linear-gradient(45deg, #000080, #000099);
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: rgba(0, 0, 50, 0.8);
-      border: 3px solid #ff0;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #00ffff;
-    }
-
-    h1 {
-      text-shadow: 2px 2px #ff0, -2px -2px #0f0;
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    #chat {
-      height: 350px;
-      overflow-y: auto;
-      background: #000;
-      padding: 10px;
-      border: 2px solid #0f0;
-      margin-bottom: 15px;
-      font-size: 16px;
-      color: #0f0;
-      text-align: left;
-    }
-
-    .message {
-      padding: 5px;
-      border-bottom: 1px dashed #003300;
-      margin-bottom: 10px;
-    }
-
-    .message-name {
-      color: #ff0;
-      font-weight: bold;
-    }
-
-    .message-time {
-      color: #888;
-      font-size: 0.8em;
-    }
-
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 16px;
-      color: #0f0;
-      background: #000;
-      border: 2px solid #0f0;
-    }
-
-    #send {
-      background: #00f;
-      color: white;
-      cursor: pointer;
-    }
-
-    #send:hover {
-      background: #00a;
-    }
-
-    .emoji-panel {
-      margin-bottom: 10px;
-    }
-
-    .emoji-btn {
-      font-size: 24px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 5px;
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دردشة الأندية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #282c34;
+            color: white;
+            margin: 0;
+            padding: 10px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: #444;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+        h1 {
+            color: #00ff00;
+            margin-bottom: 20px;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            background: #000;
+            color: #00ff00;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .team-logo {
+            max-width: 100px;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>دردشة جماعية ★ متوهجة</h1>
-
-    <div class="emoji-panel">
-      <button class="emoji-btn" onclick="addEmoji('😊')">😊</button>
-      <button class="emoji-btn" onclick="addEmoji('😂')">😂</button>
-      <button class="emoji-btn" onclick="addEmoji('❤️')">❤️</button>
-      <button class="emoji-btn" onclick="addEmoji('👍')">👍</button>
+    <div class="container">
+        <h1>اختر ناديك المفضل</h1>
+        <select id="team-selector">
+            <option value="">-- اختر النادي --</option>
+        </select>
+        <div id="team-info">
+            <img id="team-logo" class="team-logo" src="" alt="شعار النادي">
+            <p id="team-name"></p>
+        </div>
+        <button onclick="selectTeam()">تأكيد الاختيار</button>
     </div>
 
-    <div id="chat"></div>
+    <script>
+        const teamSelector = document.getElementById('team-selector');
+        const teamLogo = document.getElementById('team-logo');
+        const teamName = document.getElementById('team-name');
 
-    <input id="username" type="text" placeholder="اسم المستخدم">
-    <input id="message" type="text" placeholder="اكتب رسالتك هنا">
-    <button id="send">إرسال</button>
-  </div>
+        // رابط JSON
+        const jsonURL = 'https://raw.githubusercontent.com/username/repo/main/data/teams.json';
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+        // جلب بيانات الأندية
+        fetch(jsonURL)
+            .then(response => response.json())
+            .then(data => {
+                for (const teamId in data) {
+                    const team = data[teamId];
+                    const option = document.createElement('option');
+                    option.value = teamId;
+                    option.textContent = team.name;
+                    teamSelector.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error('خطأ في جلب البيانات:', error);
+            });
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBDMhVx...",
-      authDomain: "chatlive-22a86.firebaseapp.com",
-      projectId: "chatlive-22a86",
-      storageBucket: "chatlive-22a86.appspot.com",
-      messagingSenderId: "63086342359",
-      appId: "1:63086342359:web:e65a614df7f0f8e137c092"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const messagesRef = collection(db, "messages");
-
-    const chat = document.getElementById('chat');
-    const messageInput = document.getElementById('message');
-    const usernameInput = document.getElementById('username');
-    const sendButton = document.getElementById('send');
-
-    const addEmoji = (emoji) => {
-      messageInput.value += emoji;
-      messageInput.focus();
-    };
-
-    const loadMessages = () => {
-      const q = query(messagesRef, orderBy("timestamp", "asc"));
-      onSnapshot(q, (snapshot) => {
-        chat.innerHTML = '';
-        snapshot.forEach(doc => {
-          const { name, text, timestamp } = doc.data();
-          const time = timestamp?.toDate().toLocaleTimeString() || 'غير معروف';
-          chat.innerHTML += `
-            <div class="message">
-              <span class="message-name">${name || "مجهول"}:</span> ${text}
-              <span class="message-time">(${time})</span>
-            </div>
-          `;
+        // عرض بيانات النادي عند الاختيار
+        teamSelector.addEventListener('change', () => {
+            const selectedTeam = teamSelector.value;
+            fetch(jsonURL)
+                .then(response => response.json())
+                .then(data => {
+                    if (data[selectedTeam]) {
+                        teamLogo.src = data[selectedTeam].logo;
+                        teamName.textContent = data[selectedTeam].name;
+                    } else {
+                        teamLogo.src = '';
+                        teamName.textContent = '';
+                    }
+                });
         });
-        chat.scrollTop = chat.scrollHeight;
-      });
-    };
 
-    const sendMessage = async () => {
-      const text = messageInput.value.trim();
-      const username = usernameInput.value.trim() || "مجهول";
-      if (text) {
-        await addDoc(messagesRef, {
-          name: username,
-          text: text,
-          timestamp: serverTimestamp(),
-        });
-        messageInput.value = '';
-      }
-    };
-
-    sendButton.addEventListener('click', sendMessage);
-    messageInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') sendMessage();
-    });
-
-    loadMessages();
-  </script>
+        function selectTeam() {
+            alert('تم اختيار النادي: ' + teamName.textContent);
+        }
+    </script>
 </body>
 </html>
