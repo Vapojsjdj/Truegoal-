@@ -1,940 +1,433 @@
-<html><head><base href=".">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>&#x639;&#x627;&#x644;&#x645; &#x643;&#x631;&#x629; &#x627;&#x644;&#x642;&#x62f;&#x645; - &#x645;&#x648;&#x642;&#x639; &#x631;&#x64a;&#x627;&#x636;&#x64a;</title>
-<style>
-    body {
-        font-family: Tahoma, Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        direction: rtl;
-        background: #f0f0f0;
+<html><head><base href="/" /><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>مباراة برشلونة وأتلتيكو مدريد</title><style>
+body {
+    font-family: 'Cairo', Arial, sans-serif;
+    background: linear-gradient(135deg, #f4f4f4 0%, #e0e0e0 100%);
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    direction: rtl;
+}
+
+h2 {
+    color: #1a237e;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.video-container {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    height: 400px;
+    overflow: hidden;
+    margin: 20px auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYkWtcTTBL-v02at8IAj1L4rg0jedkCZHenw&s') no-repeat center center;
+    background-size: cover;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.play-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+}
+
+.play-button::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 25px solid #1a237e;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    margin-left: 5px;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.lineup-container {
+    background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 900px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.team-lineup {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.team-lineup h4 {
+    color: #1a237e;
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1a237e;
+}
+
+.position-group {
+    margin: 15px 0;
+}
+
+.position-group h5 {
+    color: #303f9f;
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+.player {
+    background: #f5f5f5;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 8px;
+    color: #424242;
+    transition: all 0.3s ease;
+}
+
+.player:hover {
+    background: #e3f2fd;
+    transform: translateX(-5px);
+}
+
+.match-info {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.match-info h3 {
+    color: #1a237e;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.match-info p {
+    font-size: 1.2em;
+    color: #424242;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.teams-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 40px;
+}
+
+.team {
+    text-align: center;
+}
+
+.team img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.team img:hover {
+    transform: scale(1.1);
+}
+
+.vs {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #1a237e;
+    margin: 0 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.team h4 {
+    margin-top: 15px;
+    color: #1a237e;
+    font-size: 1.3em;
+}
+
+.ticker-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #1a237e, #303f9f);
+    color: white;
+    padding: 15px 0;
+    z-index: 1001;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+}
+
+.ticker {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-content {
+    display: inline-block;
+    animation: ticker-slide 30s linear infinite;
+    padding-left: 100%;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.team-name {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.player-name {
+    color: #90caf9;
+}
+
+.news-item {
+    margin: 0 20px;
+    padding: 5px 15px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+}
+
+@keyframes ticker-slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+@media (max-width: 768px) {
+    .video-container {
+        height: 300px;
     }
-
-    .header {
-        background: linear-gradient(to bottom, #006400, #004d00);
-        padding: 10px;
-        text-align: center;
-        color: white;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        max-height: 100vh;
-        overflow-y: auto;
-    }
-
-    .nav-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .nav-button {
-        background: #004d00;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-    .nav-button:hover {
-        background: #008800;
-    }
-
-    .match-banner {
-        background: white;
-        padding: 15px;
-        text-align: center;
-        border-bottom: 2px solid #004d00;
-    }
-
-    .teams {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        font-size: 1.2em;
-        padding: 10px;
-        background: white;
-        margin-bottom: 15px;
-        flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    }
-
-    .team-logo {
-        width: 40px;
-        height: 40px;
-        object-fit: contain;
-    }
-
-    .main-content {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 15px;
-        padding: 15px;
-    }
-
-    .video-section {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .video-box {
-        background: white;
-        border: 1px solid #ccc;
-        padding: 10px;
-        min-height: 300px;
-    }
-
-    .chat-box {
-        background: white;
-        border: 1px solid #ccc;
-        padding: 10px;
-        height: 650px; /* Increased from 300px */
-        display: flex;
-        flex-direction: column;
-    }
-
-    .chat-box iframe {
-        width: 100%;
-        height: 600px; /* Increased from 400px */
-        border: none;
-        border-radius: 4px;
-        margin-top: 10px;
-    }
-
-    @media (max-width: 768px) {
-        .chat-box iframe {
-            height: 500px; /* Increased from 300px */
-        }
-
-        .chat-box {
-            height: 550px; /* Increased from 250px */
-        }
-    }
-
-    .chat-messages {
-        flex-grow: 1;
-        overflow-y: auto;
-        padding: 10px;
-        background: #f9f9f9;
-        margin-bottom: 10px;
-    }
-
-    .chat-input {
-        display: flex;
-        gap: 10px;
-    }
-
-    .chat-input input {
-        flex-grow: 1;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .chat-input button {
-        padding: 8px 15px;
-        background: #004d00;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .info-panels {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .info-panel {
-        background: white;
-        border: 1px solid #ccc;
-        padding: 15px;
-    }
-
-    .info-title {
-        background: #004d00;
-        color: white;
-        padding: 8px;
-        margin: -15px -15px 15px -15px;
-        text-align: center;
-    }
-
-    .visitor-count {
-        text-align: center;
-        padding: 10px;
-        background: #004d00;
-        color: white;
-        margin: 15px 0;
-    }
-
-    .footer {
-        background: #004d00;
-        color: white;
+    
+    .match-info {
         padding: 20px;
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .league-standings {
-        margin-top: 15px;
-    }
-
-    .standings-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
-
-    .standings-table th,
-    .standings-table td {
-        padding: 8px;
-        text-align: center;
-        border: 1px solid #ddd;
-    }
-
-    .standings-table th {
-        background-color: #004d00;
-        color: white;
-    }
-
-    .standings-table tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    .player-image {
-        width: 100%;
-        max-width: 200px;
-        height: auto;
-        margin: 10px auto;
-        display: block;
-        border-radius: 10px;
-    }
-
-    .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        padding: 10px;
-    }
-
-    .social-icon {
-        color: white;
-        font-size: 24px;
-        transition: transform 0.3s;
-    }
-
-    .social-icon:hover {
-        transform: scale(1.2);
-    }
-
-    .lineup-buttons {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-
-    .team-button {
-        background: #004d00;
-        color: white;
-        padding: 8px 15px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        flex: 1;
-    }
-
-    .team-button:hover {
-        background: #006600;
-    }
-
-    .team-button.active {
-        background: #008800;
-    }
-
-    .team-lineup {
-        display: none;
-    }
-
-    .team-lineup.active {
-        display: block;
-    }
-
-    .lineup-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        text-align: center;
-    }
-
-    .player-item {
-        background: #f5f5f5;
-        padding: 8px;
-        border-radius: 4px;
-    }
-
-    @media (max-width: 768px) {
-        .header {
-            position: relative;
-            max-height: none;
-        }
-
-        .nav-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 5px;
-            padding: 5px;
-        }
-
-        .nav-button {
-            width: auto;
-            margin: 0;
-            padding: 8px 5px;
-            font-size: 0.9em;
-        }
-
-        .main-content {
-            grid-template-columns: 1fr;
-        }
-        
-        .teams {
-            flex-direction: row; /* Change from column to row */
-            gap: 10px;
-            padding: 5px;
-        }
-
-        .team-logo {
-            width: 30px; /* Slightly smaller logos on mobile */
-            height: 30px;
-        }
-
-        .teams span {
-            font-size: 0.9em;
-        }
-
-        .chat-box {
-            height: 550px; /* Increased from 250px */
-        }
-
-        .video-box {
-            min-height: 200px;
-        }
-
-        .info-panel {
-            padding: 10px;
-        }
-
-        .info-title {
-            margin: -10px -10px 10px -10px;
-            padding: 5px;
-        }
     }
     
-    .theme-toggles {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        padding: 10px;
+    .team img {
+        width: 80px;
+        height: 80px;
     }
+    
+    .vs {
+        font-size: 2em;
+    }
+}
+</style></head><body>
 
-    .theme-button {
-        background: #004d00;
-        color: white;
-        padding: 8px 15px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        transition: all 0.3s ease;
-    }
+<h2>مباراة برشلونة وأتلتيكو مدريد</h2>
 
-    .theme-button:hover {
-        background: #006600;
-    }
+<div class="video-container">
+    <iframe 
+        id="youtubePlayer"
+        src="https://www.youtube.com/embed/gqAI1D9kWeA?enablejsapi=1" 
+        allow="autoplay; encrypted-media; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
 
-    .theme-button i {
-        font-size: 14px;
-    }
-
-    /* Dark Mode Styles */
-    body.dark-mode {
-        background: #1a1a1a;
-        color: #ffffff;
-    }
-
-    body.dark-mode .header {
-        background: linear-gradient(to bottom, #000000, #1a1a1a);
-    }
-
-    body.dark-mode .nav-button {
-        background: #333333;
-    }
-
-    body.dark-mode .nav-button:hover {
-        background: #444444;
-    }
-
-    body.dark-mode .match-banner,
-    body.dark-mode .video-box,
-    body.dark-mode .chat-box,
-    body.dark-mode .info-panel {
-        background: #2d2d2d;
-        border-color: #404040;
-    }
-
-    body.dark-mode .chat-messages {
-        background: #363636;
-    }
-
-    body.dark-mode .chat-input input {
-        background: #404040;
-        border-color: #555555;
-        color: white;
-    }
-
-    body.dark-mode .info-title {
-        background: #333333;
-    }
-
-    body.dark-mode .standings-table th {
-        background-color: #333333;
-    }
-
-    body.dark-mode .standings-table td {
-        border-color: #404040;
-    }
-
-    body.dark-mode .standings-table tr:nth-child(even) {
-        background-color: #363636;
-    }
-
-    body.dark-mode .player-item {
-        background: #363636;
-    }
-
-    body.dark-mode .chat-box {
-        background: #2d2d2d;
-    }
-
-    /* Blue Theme Classes */
-    body.blue-theme .header {
-        background: linear-gradient(to bottom, #003366, #002244);
-    }
-
-    body.blue-theme .nav-button,
-    body.blue-theme .chat-input button,
-    body.blue-theme .theme-button,
-    body.blue-theme .info-title,
-    body.blue-theme .standings-table th,
-    body.blue-theme .team-button {
-        background: #003366;
-    }
-
-    body.blue-theme .nav-button:hover,
-    body.blue-theme .chat-input button:hover,
-    body.blue-theme .theme-button:hover,
-    body.blue-theme .team-button:hover {
-        background: #004488;
-    }
-
-    body.blue-theme .team-button.active {
-        background: #0055aa;
-    }
-
-    body.blue-theme .visitor-count,
-    body.blue-theme .footer {
-        background: #003366;
-    }
-
-    #adminPanel {
-        direction: rtl;
-    }
-
-    #adminPanel input,
-    #adminPanel select,
-    #adminPanel textarea {
-        margin: 5px;
-        padding: 5px;
-        width: calc(100% - 10px);
-    }
-
-    #adminPanel button {
-        margin: 5px;
-        padding: 8px 15px;
-        background: #004d00;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    #adminPanel button:hover {
-        background: #006600;
-    }
-
-    .standing-entry {
-        margin: 5px 0;
-        display: flex;
-        gap: 10px;
-    }
-
-    .standing-entry input {
-        flex: 1;
-    }
-
-    body.dark-mode #adminPanel {
-        background: #2d2d2d;
-        color: white;
-    }
-
-    body.dark-mode #adminPanel input,
-    body.dark-mode #adminPanel select,
-    body.dark-mode #adminPanel textarea {
-        background: #404040;
-        color: white;
-        border: 1px solid #555;
-    }
-
-    #exportPanel {
-        direction: rtl;
-    }
-
-    #exportPanel textarea {
-        resize: vertical;
-        min-height: 200px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    #exportPanel button {
-        background: #004d00;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 8px 15px;
-        cursor: pointer;
-    }
-
-    #exportPanel button:hover {
-        background: #006600;
-    }
-
-    body.dark-mode #exportPanel {
-        background: #2d2d2d;
-        color: white;
-    }
-
-    body.dark-mode #exportPanel textarea {
-        background: #404040;
-        color: white;
-        border-color: #555;
-    }
-
-    .reaction-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        padding: 15px;
-        margin: 10px 0;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-    }
-
-    .reaction-btn {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 15px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: #f0f0f0;
-    }
-
-    .reaction-btn:hover {
-        transform: scale(1.05);
-    }
-
-    .reaction-btn.like {
-        background: #e8f5e9;
-        color: #2e7d32;
-    }
-
-    .reaction-btn.dislike {
-        background: #ffebee;
-        color: #c62828;
-    }
-
-    .reaction-btn i {
-        font-size: 1.2em;
-    }
-
-    .reaction-count {
-        font-weight: bold;
-        min-width: 30px;
-        text-align: center;
-    }
-
-    body.dark-mode .reaction-btn {
-        background: #333;
-        color: #fff;
-    }
-
-    body.dark-mode .reaction-btn.like {
-        background: #1b5e20;
-    }
-
-    body.dark-mode .reaction-btn.dislike {
-        background: #b71c1c;
-    }
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
-    <div class="header">
-        <h1>&#x639;&#x627;&#x644;&#x645; &#x643;&#x631;&#x629; &#x627;&#x644;&#x642;&#x62f;&#x645;</h1>
-        <div class="social-icons">
-            <a href="https://facebook.com" class="social-icon" target="_blank">
-                <i class="fab fa-facebook"></i>
-            </a>
-            <a href="https://twitter.com" class="social-icon" target="_blank">
-                <i class="fab fa-x-twitter"></i>
-            </a>
-            <a href="https://instagram.com" class="social-icon" target="_blank">
-                <i class="fab fa-instagram"></i>
-            </a>
-        </div>
-        <div class="theme-toggles">
-            <button id="darkModeToggle" class="theme-button">
-                <i class="fas fa-moon"></i>
-                &#x648;&#x636;&#x639; &#x644;&#x64a;&#x644;&#x64a;
-            </button>
-            <button id="colorThemeToggle" class="theme-button">
-                <i class="fas fa-palette"></i>
-                &#x62a;&#x63a;&#x64a;&#x64a;&#x631; &#x627;&#x644;&#x644;&#x648;&#x646;
-            </button>
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-button">&#x627;&#x644;&#x631;&#x626;&#x64a;&#x633;&#x64a;&#x629;</button>
-            <button class="nav-button">&#x623;&#x62e;&#x628;&#x627;&#x631;</button>
-            <button class="nav-button">&#x645;&#x628;&#x627;&#x631;&#x64a;&#x627;&#x62a;</button>
-            <button class="nav-button">&#x646;&#x62a;&#x627;&#x626;&#x62c;</button>
-            <button class="nav-button">&#x625;&#x62d;&#x635;&#x627;&#x626;&#x64a;&#x627;&#x62a;</button>
-            <button class="nav-button">&#x628;&#x62b; &#x645;&#x628;&#x627;&#x634;&#x631;</button>
-        </div>
+    <div class="overlay">
+        <div class="play-button" id="playButton"></div>
     </div>
+</div>
 
-    <div class="match-banner">
-        <div class="teams">
-            <img src="https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg" class="team-logo" alt="Tottenham">
-            <span>&#x62a;&#x648;&#x62a;&#x646;&#x647;&#x627;&#x645; &#x647;&#x648;&#x62a;&#x633;&#x628;&#x64a;&#x631;</span>
-            <span class="score">0 - 0</span>
-            <span>&#x645;&#x627;&#x646;&#x634;&#x633;&#x62a;&#x631; &#x64a;&#x648;&#x646;&#x627;&#x64a;&#x62a;&#x62f;</span>
-            <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" class="team-logo" alt="Manchester United">
+<div class="popup" id="popup">
+    <iframe 
+        allowfullscreen="true" 
+        frameborder="0" 
+        height="80%" 
+        scrolling="1" 
+        src="https://bein4kora.com/albaplayer/bnin1/?serv=0" 
+        width="90%">
+    </iframe>
+</div>
+
+<div class="lineup-container">
+    <h3>التشكيلة المتوقعة للفريقين</h3>
+    
+    <div class="team-lineup">
+        <h4>تشكيلة برشلونة</h4>
+        
+        <div class="position-group">
+            <h5>حراسة المرمى</h5>
+            <div class="player">إيناكي بينيا</div>
+        </div>
+        
+        <div class="position-group">
+            <h5>خط الدفاع</h5>
+            <div class="player">جول كوندي</div>
+            <div class="player">باو كوبارسي</div>
+            <div class="player">إينيغو مارتينيز</div>
+            <div class="player">أليخاندرو بالدي</div>
+        </div>
+        
+        <div class="position-group">
+            <h5>خط الوسط</h5>
+            <div class="player">مارك كاسادو</div>
+            <div class="player">بيدري</div>
+            <div class="player">داني أولمو</div>
+        </div>
+        
+        <div class="position-group">
+            <h5>خط الهجوم</h5>
+            <div class="player">رافينيا</div>
+            <div class="player">روبرت ليفاندوفسكي</div>
+            <div class="player">فيران لوبيز</div>
         </div>
     </div>
     
-    <div class="main-content">
-        <div class="video-section">
-            <div class="video-box">
-                <div class="info-title">&#x627;&#x644;&#x628;&#x62b; &#x627;&#x644;&#x645;&#x628;&#x627;&#x634;&#x631;</div>
-                <iframe allowfullscreen="true" frameborder="0" height="500px" scrolling="1" src="https://d.alkoora.live/albaplayer/on-time-sport-2/" width="100%" style="background: #000;"></iframe>
-            </div>
-
-            <div class="reaction-buttons">
-                <button class="reaction-btn like" onclick="handleReaction(&apos;like&apos;)">
-                    <i class="fas fa-thumbs-up"></i>
-                    <span class="reaction-count" id="likeCount">0</span>
-                </button>
-                <button class="reaction-btn dislike" onclick="handleReaction(&apos;dislike&apos;)">
-                    <i class="fas fa-thumbs-down"></i>
-                    <span class="reaction-count" id="dislikeCount">0</span>
-                </button>
-            </div>
-            <div class="chat-box">
-                <div class="info-title">&#x63a;&#x631;&#x641;&#x629; &#x627;&#x644;&#x62f;&#x631;&#x62f;&#x634;&#x629;</div>
-                <iframe src="https://vapojsjdj.github.io/truegoalchat/" width="100%" height="600px" frameborder="0" style="background: #fff; border-radius: 4px;"></iframe>
-            </div>
+    <div class="team-lineup">
+        <h4>تشكيلة أتلتيكو مدريد</h4>
+        
+        <div class="position-group">
+            <h5>حراسة المرمى</h5>
+            <div class="player">يان أوبلاك</div>
         </div>
         
-        <div class="info-panels">
-            <div class="info-panel">
-                <div class="info-title">&#x645;&#x639;&#x644;&#x648;&#x645;&#x627;&#x62a; &#x627;&#x644;&#x645;&#x628;&#x627;&#x631;&#x627;&#x629;</div>
-                <p>&#x627;&#x644;&#x628;&#x637;&#x648;&#x644;&#x629;: &#x643;&#x623;&#x633; &#x627;&#x644;&#x631;&#x627;&#x628;&#x637;&#x629; &#x627;&#x644;&#x625;&#x646;&#x62c;&#x644;&#x64a;&#x632;&#x64a;&#x629; &#x627;&#x644;&#x645;&#x62d;&#x62a;&#x631;&#x641;&#x629; (&#x643;&#x623;&#x633; &#x643;&#x627;&#x631;&#x627;&#x628;&#x627;&#x648;)</p>
-                <p>&#x627;&#x644;&#x62f;&#x648;&#x631;: &#x631;&#x628;&#x639; &#x627;&#x644;&#x646;&#x647;&#x627;&#x626;&#x64a;</p>
-                <p>&#x627;&#x644;&#x62a;&#x627;&#x631;&#x64a;&#x62e;: 19 &#x62f;&#x64a;&#x633;&#x645;&#x628;&#x631; 2024</p>
-                <p>&#x627;&#x644;&#x645;&#x644;&#x639;&#x628;: &#x62a;&#x648;&#x62a;&#x646;&#x647;&#x627;&#x645; &#x647;&#x648;&#x62a;&#x633;&#x628;&#x64a;&#x631; &#x633;&#x62a;&#x627;&#x62f;&#x64a;&#x648;&#x645;</p>
-                <p>&#x627;&#x644;&#x642;&#x646;&#x627;&#x629; &#x627;&#x644;&#x646;&#x627;&#x642;&#x644;&#x629;: beIN SPORTS 2</p>
-            </div>
-
-            <div class="info-panel">
-                <div class="info-title">&#x62a;&#x634;&#x643;&#x64a;&#x644;&#x629; &#x627;&#x644;&#x623;&#x633;&#x627;&#x633;&#x64a;&#x629;</div>
-                <div class="lineup-buttons">
-                    <button class="team-button active" onclick="showTeam(&apos;tottenham&apos;)">&#x62a;&#x648;&#x62a;&#x646;&#x647;&#x627;&#x645;</button>
-                    <button class="team-button" onclick="showTeam(&apos;manutd&apos;)">&#x645;&#x627;&#x646; &#x64a;&#x648;&#x646;&#x627;&#x64a;&#x62a;&#x62f;</button>
-                </div>
-                <div class="team-lineup" id="tottenham-lineup" style="display: block;">
-                    <div class="lineup-grid">
-                        <div class="player-item">&#x641;&#x64a;&#x643;&#x627;&#x631;&#x64a;&#x648;</div>
-                        <div class="player-item">&#x623;&#x648;&#x62f;&#x648;&#x62c;&#x64a;</div>
-                        <div class="player-item">&#x62f;&#x64a;&#x641;&#x64a;&#x632;</div>
-                        <div class="player-item">&#x62f;&#x631;&#x627;&#x62c;&#x648;&#x633;&#x64a;&#x646;</div>
-                        <div class="player-item">&#x62c;&#x631;&#x627;&#x64a;</div>
-                        <div class="player-item">&#x633;&#x627;&#x631;</div>
-                        <div class="player-item">&#x628;&#x64a;&#x62a;&#x627;&#x646;&#x643;&#x648;&#x631;</div>
-                        <div class="player-item">&#x643;&#x648;&#x644;&#x648;&#x633;&#x64a;&#x641;&#x633;&#x643;&#x64a;</div>
-                        <div class="player-item">&#x641;&#x64a;&#x631;&#x646;&#x631;</div>
-                        <div class="player-item">&#x633;&#x648;&#x644;&#x627;&#x646;&#x643;&#x64a;</div>
-                        <div class="player-item">&#x633;&#x648;&#x646;</div>
-                    </div>
-                </div>
-                <div class="team-lineup" id="manutd-lineup" style="display: none;">
-                    <div class="lineup-grid">
-                        <div class="player-item">&#x623;&#x648;&#x646;&#x627;&#x646;&#x627;</div>
-                        <div class="player-item">&#x645;&#x627;&#x631;&#x62a;&#x64a;&#x646;&#x64a;&#x632;</div>
-                        <div class="player-item">&#x645;&#x627;&#x62c;&#x648;&#x627;&#x64a;&#x631;</div>
-                        <div class="player-item">&#x62f;&#x64a; &#x644;&#x64a;&#x62e;&#x62a;</div>
-                        <div class="player-item">&#x62f;&#x627;&#x644;&#x648;&#x62a;</div>
-                        <div class="player-item">&#x623;&#x648;&#x62c;&#x627;&#x631;&#x62a;&#x64a;</div>
-                        <div class="player-item">&#x641;&#x64a;&#x631;&#x646;&#x627;&#x646;&#x62f;&#x64a;&#x634;</div>
-                        <div class="player-item">&#x645;&#x632;&#x631;&#x627;&#x648;&#x64a;</div>
-                        <div class="player-item">&#x62c;&#x627;&#x631;&#x646;&#x627;&#x62a;&#x634;&#x648;</div>
-                        <div class="player-item">&#x647;&#x648;&#x64a;&#x644;&#x648;&#x646;&#x62f;</div>
-                        <div class="player-item">&#x62f;&#x64a;&#x627;&#x644;&#x648;</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-panel">
-                <div class="info-title">&#x62a;&#x631;&#x62a;&#x64a;&#x628; &#x627;&#x644;&#x62f;&#x648;&#x631;&#x64a;</div>
-                <div class="league-standings">
-                    <table class="standings-table">
-                        <tr>
-                            <th>#</th>
-                            <th>&#x627;&#x644;&#x641;&#x631;&#x64a;&#x642;</th>
-                            <th>&#x646;&#x642;&#x627;&#x637;</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>&#x631;&#x64a;&#x627;&#x644; &#x645;&#x62f;&#x631;&#x64a;&#x62f;</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>&#x628;&#x631;&#x634;&#x644;&#x648;&#x646;&#x629;</td>
-                            <td>44</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>&#x623;&#x62a;&#x644;&#x62a;&#x64a;&#x643;&#x648; &#x645;&#x62f;&#x631;&#x64a;&#x62f;</td>
-                            <td>41</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>&#x625;&#x634;&#x628;&#x64a;&#x644;&#x64a;&#x629;</td>
-                            <td>36</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+        <div class="position-group">
+            <h5>خط الدفاع</h5>
+            <div class="player">ماركوس يورينتي</div>
+            <div class="player">خوسيه ماريا خيمينيز</div>
+            <div class="player">كليمنت لونجليه</div>
+            <div class="player">خافي گالان</div>
+        </div>
+        
+        <div class="position-group">
+            <h5>خط الوسط</h5>
+            <div class="player">كونور گالاگر</div>
+            <div class="player">رودريگو دي بول</div>
+            <div class="player">بابلو باريوس</div>
+        </div>
+        
+        <div class="position-group">
+            <h5>خط الهجوم</h5>
+            <div class="player">جوليانو سيميوني</div>
+            <div class="player">أنطوان گريزمان</div>
+            <div class="player">جوليان ألفاريز</div>
         </div>
     </div>
+</div>
 
-    <footer class="footer">
-        <div>
-            <h3>&#x639;&#x627;&#x644;&#x645; &#x643;&#x631;&#x629; &#x627;&#x644;&#x642;&#x62f;&#x645;</h3>
-            <p>&#x645;&#x648;&#x642;&#x639;&#x643; &#x627;&#x644;&#x623;&#x648;&#x644; &#x644;&#x645;&#x62a;&#x627;&#x628;&#x639;&#x629; &#x623;&#x62e;&#x628;&#x627;&#x631; &#x643;&#x631;&#x629; &#x627;&#x644;&#x642;&#x62f;&#x645; &#x627;&#x644;&#x639;&#x627;&#x644;&#x645;&#x64a;&#x629;</p>
-            <p>&#x62c;&#x645;&#x64a;&#x639; &#x627;&#x644;&#x62d;&#x642;&#x648;&#x642; &#x645;&#x62d;&#x641;&#x648;&#x638;&#x629; &#xa9; 2024</p>
-            <p>&#x62a;&#x648;&#x627;&#x635;&#x644; &#x645;&#x639;&#x646;&#x627;: info@football-world.com</p>
-        </div>
-        <div class="flag-counter" style="margin-top: 20px; text-align: center;">
-            <a href="https://www.flagcounter.me/details/fjf">
-                <img src="https://www.flagcounter.me/fjf/" alt="Flag Counter" style="max-width: 100%; height: auto;">
-            </a>
-        </div>
-    </footer>
+<div class="match-info">
+    <h3>تفاصيل المباراة</h3>
+    <p><strong>البطولة:</strong> الدوري الإسباني - الدرجة الأولى</p>
+    <p><strong>التاريخ:</strong> 25 ديسمبر 2024</p>
+    <p><strong>التوقيت:</strong> 10:00 مساءً بتوقيت مكة المكرمة</p>
+    <p><strong>الملعب:</strong> ملعب كامب نو</p>
+    <p><strong>القناة الناقلة:</strong> beIN SPORTS HD</p>
 
-    <div id="exportPanel" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-        background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 1001; 
-        width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto;">
-        <h3>&#x643;&#x648;&#x62f; HTML &#x627;&#x644;&#x643;&#x627;&#x645;&#x644;</h3>
-        <textarea id="exportedCode" style="width: 100%; height: 60vh; direction: ltr; font-family: monospace; padding: 10px;"></textarea>
-        <button onclick="copyExportedCode()" style="margin-top: 10px;">&#x646;&#x633;&#x62e; &#x627;&#x644;&#x643;&#x648;&#x62f;</button>
-        <button onclick="closeExportPanel()" style="margin-top: 10px; margin-right: 10px;">&#x625;&#x63a;&#x644;&#x627;&#x642;</button>
+    <div class="teams-container">
+        <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/4/47/FC_Barcelona_%28crest%29.svg/800px-FC_Barcelona_%28crest%29.svg.png" alt="برشلونة">
+            <h4>برشلونة</h4>
+        </div>
+        
+        <div class="vs">VS</div>
+        
+        <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/f/f4/Atletico_Madrid_2017_logo.svg/800px-Atletico_Madrid_2017_logo.svg.png" alt="أتلتيكو مدريد">
+            <h4>أتلتيكو مدريد</h4>
+        </div>
     </div>
+</div>
 
-    <script>let visitorCount = 1234;
+<div class="ticker-container">
+    <div class="ticker">
+        <div class="ticker-content" id="ticker-content">
+            <span class="team-name">برشلونة:</span> 
+            <span class="player-name">ليفاندوفسكي</span> يقود خط الهجوم | 
+            <span class="team-name">أتلتيكو مدريد:</span> 
+            <span class="player-name">غريزمان</span> جاهز للمباراة | 
+            تحديث التشكيلة الأساسية للفريقين | 
+            <span class="news-item">متابعة حية للمباراة على موقعنا</span> |
+            <span class="team-name">برشلونة</span> يسعى لتحقيق الفوز |
+            <span class="team-name">أتلتيكو مدريد</span> بتشكيلة هجومية
+        </div>
+    </div>
+</div>
+
+<script>
+const tickerMessages = [
+    '<span class="team-name">برشلونة:</span> <span class="player-name">ليفاندوفسكي</span> يقود خط الهجوم | <span class="player-name">بيدري</span> يعود للتشكيلة الأساسية',
+    '<span class="team-name">أتلتيكو مدريد:</span> <span class="player-name">غريزمان</span> جاهز للمباراة | <span class="player-name">أوبلاك</span> في حراسة المرمى',
+    'إحصائيات الفريقين في الدوري | <span class="news-item">متابعة حية للمباراة</span> | أخر استعدادات الفريقين'
+];
+
+let currentMessageIndex = 0;
+const tickerContent = document.getElementById('ticker-content');
+
 setInterval(() => {
-  visitorCount += Math.floor(Math.random() * 3);
-  document.getElementById('visitorCount').textContent = visitorCount.toLocaleString('ar-SA');
-}, 5000);
-let reactions = {
-  likes: parseInt(localStorage.getItem('matchLikes') || 0),
-  dislikes: parseInt(localStorage.getItem('matchDislikes') || 0)
-};
-document.getElementById('likeCount').textContent = reactions.likes;
-document.getElementById('dislikeCount').textContent = reactions.dislikes;
-function sendMessage() {
-  const input = document.getElementById('messageInput');
-  const message = input.value.trim();
-  if (message) {
-    const chatMessages = document.getElementById('chatMessages');
-    const messageElement = document.createElement('div');
-    messageElement.textContent = message;
-    messageElement.style.padding = '5px';
-    messageElement.style.margin = '5px 0';
-    messageElement.style.background = '#e8e8e8';
-    messageElement.style.borderRadius = '5px';
-    chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    input.value = '';
-  }
-}
-document.querySelector('#messageInput').addEventListener('keypress', e => {
-  if (e.key === 'Enter') {
-    sendMessage();
-  }
+    currentMessageIndex = (currentMessageIndex + 1) % tickerMessages.length;
+    tickerContent.style.opacity = '0';
+    
+    setTimeout(() => {
+        tickerContent.innerHTML = tickerMessages[currentMessageIndex];
+        tickerContent.style.opacity = '1';
+    }, 500);
+}, 180000); // Changes every 3 minutes
+
+const playButton = document.getElementById('playButton');
+const youtubePlayer = document.getElementById('youtubePlayer');
+const popup = document.getElementById('popup');
+let isPlayed = false;
+
+playButton.addEventListener('click', function () {
+    if (!isPlayed) {
+        youtubePlayer.contentWindow.postMessage(
+            '{"event":"command","func":"playVideo","args":""}', 
+            '*'
+        );
+        isPlayed = true;
+    }
+    popup.style.display = "flex";
 });
-document.querySelectorAll('.nav-button').forEach(button => {
-  button.addEventListener('click', function () {
-    alert('تم النقر على: ' + this.textContent);
-  });
-});
-function showTeam(team) {
-  document.querySelectorAll('.team-lineup').forEach(lineup => {
-    lineup.style.display = 'none';
-  });
-  document.querySelectorAll('.team-button').forEach(button => {
-    button.classList.remove('active');
-  });
-  document.getElementById(`${team}-lineup`).style.display = 'block';
-  event.target.classList.add('active');
-}
-window.addEventListener('load', () => {
-  showTeam('tottenham');
-  document.querySelector('.team-button').classList.add('active');
-});
-function initializeThemes() {
-  const darkModeToggle = document.getElementById('darkModeToggle');
-  const colorThemeToggle = document.getElementById('colorThemeToggle');
-  darkModeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode);
-  });
-  colorThemeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('blue-theme');
-    const isBlueTheme = document.body.classList.contains('blue-theme');
-    localStorage.setItem('blueTheme', isBlueTheme);
-  });
-  if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-  }
-  if (localStorage.getItem('blueTheme') === 'true') {
-    document.body.classList.add('blue-theme');
-  }
-}
-window.addEventListener('load', initializeThemes);
-function exportHTML() {
-  let tempDoc = document.documentElement.cloneNode(true);
-  const adminPanelElements = ['#adminPanel', 'button[onclick="toggleAdminPanel"]', '#exportPanel'];
-  adminPanelElements.forEach(selector => {
-    const elements = tempDoc.querySelectorAll(selector);
-    elements.forEach(el => el.parentNode.removeChild(el));
-  });
-  let scriptContent = tempDoc.querySelector('script').textContent;
-  const adminFunctionsToRemove = ['const adminControls = {', 'function toggleAdminPanel()', 'function updateTeamNames()', 'function addStandingEntry()', 'function updateStandings()', 'function updateLineup()', 'function exportHTML()', 'function formatHTML()', 'function copyExportedCode()', 'function closeExportPanel()'];
-  adminFunctionsToRemove.forEach(func => {
-    const functionIndex = scriptContent.indexOf(func);
-    if (functionIndex !== -1) {
-      let bracketCount = 0;
-      let endIndex = functionIndex;
-      let inFunction = false;
-      for (let i = functionIndex; i < scriptContent.length; i++) {
-        if (scriptContent[i] === '{') {
-          bracketCount++;
-          inFunction = true;
-        } else if (scriptContent[i] === '}') {
-          bracketCount--;
-        }
-        if (inFunction && bracketCount === 0) {
-          endIndex = i + 1;
-          break;
-        }
-      }
-      scriptContent = scriptContent.substring(0, functionIndex) + scriptContent.substring(endIndex + 1);
-    }
-  });
-  tempDoc.querySelector('script').textContent = scriptContent;
-  let htmlContent = tempDoc.outerHTML;
-  htmlContent = formatHTML(htmlContent);
-  const exportPanel = document.getElementById('exportPanel');
-  const exportedCode = document.getElementById('exportedCode');
-  exportPanel.style.display = 'block';
-  exportedCode.value = htmlContent;
-}
-function formatHTML(html) {
-  let formatted = '';
-  let indent = '';
-  const tab = '    ';
-  html.split(/>\s*</).forEach(element => {
-    if (element.match(/^\/\w/)) {
-      indent = indent.substring(tab.length);
-    }
-    formatted += indent + '<' + element + '>\r\n';
-    if (element.match(/^<?\w[^>]*[^\/]$/) && !element.startsWith('input')) {
-      indent += tab;
-    }
-  });
-  return formatted.substring(1, formatted.length - 1);
-}
-function copyExportedCode() {
-  const exportedCode = document.getElementById('exportedCode');
-  exportedCode.select();
-  document.execCommand('copy');
-  const button = event.target;
-  const originalText = button.textContent;
-  button.textContent = 'تم النسخ!';
-  setTimeout(() => {
-    button.textContent = originalText;
-  }, 2000);
-}
-function closeExportPanel() {
-  document.getElementById('exportPanel').style.display = 'none';
-}
-function handleReaction(type) {
-  const oppositeType = type === 'like' ? 'dislikes' : 'likes';
-  const typeKey = type === 'like' ? 'likes' : 'dislikes';
-  const userReaction = localStorage.getItem('userReaction');
-  if (userReaction === type) {
-    reactions[typeKey]--;
-    localStorage.removeItem('userReaction');
-  } else {
-    if (userReaction) {
-      reactions[oppositeType]--;
-    }
-    reactions[typeKey]++;
-    localStorage.setItem('userReaction', type);
-  }
-  localStorage.setItem('matchLikes', reactions.likes);
-  localStorage.setItem('matchDislikes', reactions.dislikes);
-  document.getElementById('likeCount').textContent = reactions.likes;
-  document.getElementById('dislikeCount').textContent = reactions.dislikes;
-  document.querySelectorAll('.reaction-btn').forEach(btn => {
-    btn.style.transform = 'scale(1)';
-  });
-  if (localStorage.getItem('userReaction')) {
-    const activeBtn = document.querySelector(`.reaction-btn.${localStorage.getItem('userReaction')}`);
-    activeBtn.style.transform = 'scale(1.1)';
-  }
-}</script>
-</body>
-</html>
+</script>
+
+</body></html>
