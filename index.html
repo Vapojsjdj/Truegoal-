@@ -1,44 +1,24 @@
-<html><head><base href="."</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open YouTube Video in Browser</title>
+</head>
 <body>
-<iframe 
-  allowfullscreen='true' 
-  frameborder='0' 
-  height='500px' 
-  scrolling='1'
-  src='https://d.alkoora.live/albaplayer/on-time-sport-2/'
-  width='100%'
-  title="Live Stream"
-  sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
-</iframe>
+    <a href="https://www.youtube.com/watch?v=_C7EuXcsveg" target="_blank" id="playVideo">Watch Video</a>
 
-<div class="counter">
-  <a href="https://www.flagcounter.me/details/fos">
-    <img src="https://www.flagcounter.me/fos/" alt="Flag Counter">
-  </a>
-</div>
-
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-iframe {
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
-.counter {
-  text-align: center;
-  margin: 10px 0;
-}
-
-.counter img {
-  max-width: 100%;
-  height: auto;
-}
-</style>
-
-</body></html>
+    <script>
+        document.getElementById("playVideo").addEventListener("click", function(event) {
+            // منع السلوك الافتراضي للرابط
+            event.preventDefault();
+            
+            // رابط الفيديو على YouTube
+            const videoUrl = "https://www.youtube.com/watch?v=_C7EuXcsveg";
+            
+            // فتح الفيديو في متصفح جديد
+            window.open(videoUrl, "_blank");
+        });
+    </script>
+</body>
+</html>
