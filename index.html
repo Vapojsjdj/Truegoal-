@@ -1,0 +1,133 @@
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مباراة ليفربول وإيفرتون</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h2>مباراة ليفربول وإيفرتون</h2>
+
+<div class="video-container">
+  <iframe 
+    id="youtubePlayer"
+    src="https://www.youtube.com/embed/gqAI1D9kWeA?enablejsapi=1" 
+    allow="autoplay; encrypted-media; picture-in-picture" 
+    allowfullscreen>
+  </iframe>
+
+  <div class="overlay">
+    <div class="play-button" id="playButton"></div>
+  </div>
+</div>
+
+<div class="popup" id="popup">
+  <iframe 
+    allowfullscreen="true" 
+    frameborder="0" 
+    height="80%" 
+    scrolling="1" 
+    src="https://fooly.kora999.site/albaplayer/ch2/?serv=1" 
+    width="90%">
+  </iframe>
+</div>
+
+<div class="lineup-container">
+  <h3>التشكيلة المتوقعة للفريقين</h3>
+  
+  <div class="team-lineup">
+    <h4>تشكيلة ليفربول</h4>
+    
+    <div class="position-group">
+      <h5>حراسة المرمى</h5>
+      <div class="player">أليسون بيكر</div>
+    </div>
+    
+    <div class="position-group">
+      <h5>خط الدفاع</h5>
+      <div class="player">ترينت ألكسندر-أرنولد</div>
+      <div class="player">فيرجيل فان دايك</div>
+      <div class="player">إبراهيما كوناتي</div>
+      <div class="player">أندرو روبرتسون</div>
+    </div>
+    
+    <div class="position-group">
+      <h5>خط الوسط</h5>
+      <div class="player">دومينيك سوبوسلاي</div>
+      <div class="player">ألكسيس ماك أليستر</div>
+      <div class="player">كورتيس جونز</div>
+    </div>
+    
+    <div class="position-group">
+      <h5>خط الهجوم</h5>
+      <div class="player">محمد صلاح</div>
+      <div class="player">داروين نونيز</div>
+      <div class="player">لويس دياز</div>
+    </div>
+  </div>
+  
+  <div class="team-lineup">
+    <h4>تشكيلة إيفرتون</h4>
+    
+    <div class="position-group">
+      <h5>حراسة المرمى</h5>
+      <div class="player">جوردان بيكفورد</div>
+    </div>
+    
+    <div class="position-group">
+      <h5>خط الدفاع</h5>
+      <div class="player">ناثان باترسون</div>
+      <div class="player">جيمس تاركوفسكي</div>
+      <div class="player">جاريد برانثويت</div>
+      <div class="player">فيتالي ميكولينكو</div>
+    </div>
+    
+    <div class="position-group">
+      <h5>خط الوسط</h5>
+      <div class="player">عبد الله دوكوري</div>
+      <div class="player">أمادو أونانا</div>
+      <div class="player">جيمس جارنر</div>
+    </div>
+    
+    <div class="position-group">
+      <h5>خط الهجوم</h5>
+      <div class="player">دوايت مكنيل</div>
+      <div class="player">دومينيك كالفرت-لوين</div>
+      <div class="player">جاك هاريسون</div>
+    </div>
+  </div>
+</div>
+
+<div class="match-info">
+  <h3>تفاصيل المباراة</h3>
+  <p><strong>البطولة:</strong> الدوري الإنجليزي الممتاز</p>
+  <p><strong>التاريخ:</strong> 25 ديسمبر 2024</p>
+  <p><strong>التوقيت:</strong> 10:00 مساءً بتوقيت مكة المكرمة</p>
+  <p><strong>الملعب:</strong> ملعب أنفيلد</p>
+  <p><strong>القناة الناقلة:</strong> beIN SPORTS HD</p>
+
+  <div class="teams-container">
+    <div class="team">
+      <img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg" alt="ليفربول">
+      <h4>ليفربول</h4>
+    </div>
+    
+    <div class="vs">VS</div>
+    
+    <div class="team">
+      <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="إيفرتون">
+      <h4>إيفرتون</h4>
+    </div>
+  </div>
+</div>
+
+<div class="ticker-container">
+  <div class="ticker">
+    <div class="ticker-content" id="ticker-content"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
