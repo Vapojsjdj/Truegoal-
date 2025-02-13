@@ -1,133 +1,94 @@
-<html dir="rtl" lang="ar">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مباراة ليفربول وإيفرتون</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استخراج منشورات تيليجرام</title>
+    <style>
+        body { font-family: Arial, sans-serif; direction: rtl; text-align: right; background: #f5f8fa; padding: 20px; }
+        .tweet-container {
+            width: 500px; background: white; border-radius: 10px;
+            padding: 15px; box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            margin: auto; margin-bottom: 20px;
+        }
+        .tweet-header { display: flex; align-items: center; }
+        .tweet-profile-pic { width: 50px; height: 50px; border-radius: 50%; margin-left: 10px; }
+        .tweet-author { font-weight: bold; }
+        .tweet-time { color: gray; font-size: 12px; }
+        .tweet-content { margin: 10px 0; font-size: 16px; line-height: 1.4; }
+        .tweet-footer { display: flex; justify-content: space-between; font-size: 14px; color: gray; margin-top: 10px; }
+        .tweet-media img, .tweet-media video { width: 100%; margin-top: 10px; border-radius: 5px; }
+    </style>
 </head>
 <body>
 
-<h2>مباراة ليفربول وإيفرتون</h2>
+<div id="tweets"></div>
 
-<div class="video-container">
-  <iframe 
-    id="youtubePlayer"
-    src="https://www.youtube.com/embed/gqAI1D9kWeA?enablejsapi=1" 
-    allow="autoplay; encrypted-media; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
+<script>
+    const telegramPostURLs = [
+        "https://t.me/hassanalihsn/13051?embed=1&mode=tme",
+        "https://t.me/hassanalihsn/13052?embed=1&mode=tme",
+        "https://t.me/hassanalihsn/13053?embed=1&mode=tme"
+    ]; // يمكنك إضافة المزيد من الروابط هنا
 
-  <div class="overlay">
-    <div class="play-button" id="playButton"></div>
-  </div>
-</div>
+    async function fetchPostData(url) {
+        try {
+            let response = await fetch(url);
+            let html = await response.text();
+            let parser = new DOMParser();
+            let doc = parser.parseFromString(html, "text/html");
 
-<div class="popup" id="popup">
-  <iframe 
-    allowfullscreen="true" 
-    frameborder="0" 
-    height="80%" 
-    scrolling="1" 
-    src="https://fooly.kora999.site/albaplayer/ch2/?serv=1" 
-    width="90%">
-  </iframe>
-</div>
+            let author = doc.querySelector(".tgme_widget_message_author")?.innerText.trim() || "غير معروف";
+            let content = doc.querySelector(".tgme_widget_message_text")?.innerText.trim() || "لا يوجد محتوى نصي";
+            let time = doc.querySelector(".datetime")?.getAttribute("datetime") || "غير متوفر";
+            let views = doc.querySelector(".tgme_widget_message_views")?.innerText.trim() || "غير متوفر";
+            let reactions = [...doc.querySelectorAll(".tgme_widget_message_reaction")].map(e => e.innerText).join(" ") || "لا توجد تفاعلات";
+            let replies = doc.querySelector(".tgme_widget_message_replies")?.innerText.trim() || "0 تعليق";
 
-<div class="lineup-container">
-  <h3>التشكيلة المتوقعة للفريقين</h3>
-  
-  <div class="team-lineup">
-    <h4>تشكيلة ليفربول</h4>
-    
-    <div class="position-group">
-      <h5>حراسة المرمى</h5>
-      <div class="player">أليسون بيكر</div>
-    </div>
-    
-    <div class="position-group">
-      <h5>خط الدفاع</h5>
-      <div class="player">ترينت ألكسندر-أرنولد</div>
-      <div class="player">فيرجيل فان دايك</div>
-      <div class="player">إبراهيما كوناتي</div>
-      <div class="player">أندرو روبرتسون</div>
-    </div>
-    
-    <div class="position-group">
-      <h5>خط الوسط</h5>
-      <div class="player">دومينيك سوبوسلاي</div>
-      <div class="player">ألكسيس ماك أليستر</div>
-      <div class="player">كورتيس جونز</div>
-    </div>
-    
-    <div class="position-group">
-      <h5>خط الهجوم</h5>
-      <div class="player">محمد صلاح</div>
-      <div class="player">داروين نونيز</div>
-      <div class="player">لويس دياز</div>
-    </div>
-  </div>
-  
-  <div class="team-lineup">
-    <h4>تشكيلة إيفرتون</h4>
-    
-    <div class="position-group">
-      <h5>حراسة المرمى</h5>
-      <div class="player">جوردان بيكفورد</div>
-    </div>
-    
-    <div class="position-group">
-      <h5>خط الدفاع</h5>
-      <div class="player">ناثان باترسون</div>
-      <div class="player">جيمس تاركوفسكي</div>
-      <div class="player">جاريد برانثويت</div>
-      <div class="player">فيتالي ميكولينكو</div>
-    </div>
-    
-    <div class="position-group">
-      <h5>خط الوسط</h5>
-      <div class="player">عبد الله دوكوري</div>
-      <div class="player">أمادو أونانا</div>
-      <div class="player">جيمس جارنر</div>
-    </div>
-    
-    <div class="position-group">
-      <h5>خط الهجوم</h5>
-      <div class="player">دوايت مكنيل</div>
-      <div class="player">دومينيك كالفرت-لوين</div>
-      <div class="player">جاك هاريسون</div>
-    </div>
-  </div>
-</div>
+            // استخراج جميع الصور بجميع الصيغ
+            let images = [...doc.querySelectorAll(".tgme_widget_message_photo_wrap")].map(e => e.style.backgroundImage.match(/url'(.*?)'/)?.[1]);
 
-<div class="match-info">
-  <h3>تفاصيل المباراة</h3>
-  <p><strong>البطولة:</strong> الدوري الإنجليزي الممتاز</p>
-  <p><strong>التاريخ:</strong> 25 ديسمبر 2024</p>
-  <p><strong>التوقيت:</strong> 10:00 مساءً بتوقيت مكة المكرمة</p>
-  <p><strong>الملعب:</strong> ملعب أنفيلد</p>
-  <p><strong>القناة الناقلة:</strong> beIN SPORTS HD</p>
+            // استخراج جميع الفيديوهات
+            let videos = [...doc.querySelectorAll(".tgme_widget_message_video video")].map(e => e.src);
 
-  <div class="teams-container">
-    <div class="team">
-      <img src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg" alt="ليفربول">
-      <h4>ليفربول</h4>
-    </div>
-    
-    <div class="vs">VS</div>
-    
-    <div class="team">
-      <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="إيفرتون">
-      <h4>إيفرتون</h4>
-    </div>
-  </div>
-</div>
+            let mediaHTML = "";
+            images.forEach(img => { mediaHTML += `<img src="${img}" alt="صورة">`; });
+            videos.forEach(vid => { mediaHTML += `<video controls><source src="${vid}" type="video/mp4"></video>`; });
 
-<div class="ticker-container">
-  <div class="ticker">
-    <div class="ticker-content" id="ticker-content"></div>
-  </div>
-</div>
+            return `
+                <div class="tweet-container">
+                    <div class="tweet-header">
+                        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" class="tweet-profile-pic">
+                        <div>
+                            <div class="tweet-author">${author}</div>
+                            <div class="tweet-time">${time}</div>
+                        </div>
+                    </div>
+                    <div class="tweet-content">${content}</div>
+                    <div class="tweet-media">${mediaHTML}</div>
+                    <div class="tweet-footer">
+                        <div>👀 ${views}</div>
+                        <div>💬 ${replies}</div>
+                        <div>🔥 ${reactions}</div>
+                    </div>
+                </div>
+            `;
+        } catch (error) {
+            console.error(`❌ فشل في جلب المنشور من: ${url}`, error);
+            return `<div class="tweet-container"><p>❌ فشل في تحميل المنشور.</p></div>`;
+        }
+    }
 
-<script src="script.js"></script>
+    async function displayPosts() {
+        let postsHTML = "";
+        for (let url of telegramPostURLs) {
+            postsHTML += await fetchPostData(url);
+        }
+        document.getElementById("tweets").innerHTML = postsHTML;
+    }
+
+    displayPosts();
+</script>
+
 </body>
 </html>
