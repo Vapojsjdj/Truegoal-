@@ -1,0 +1,166 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeroban Gaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0,255,136,0.5);
+            margin-bottom: 2rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .link-box {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,255,136,0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0,255,136,0.2);
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+        .link-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,255,136,0.3);
+        }
+        .link-icon {
+            width: 48px;
+            height: 48px;
+            fill: #00ff88;
+            margin-bottom: 15px;
+        }
+        .messages {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        .message {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+        #downloadBtn {
+            display: none;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: #1a1a2e;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+        #downloadBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,255,136,0.4);
+        }
+        .timer-display {
+            background: rgba(0,255,136,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem auto;
+            max-width: 300px;
+            border: 1px solid rgba(0,255,136,0.3);
+            display: none;
+        }
+        .time-counter {
+            font-size: 1.2rem;
+            margin: 5px 0;
+            color: #00ff88;
+        }
+        .password-container {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .password-input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(0,255,136,0.3);
+            padding: 10px 15px;
+            border-radius: 25px;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            margin-right: 10px;
+            outline: none;
+        }
+
+        .password-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .password-input:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0,255,136,0.2);
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+        .download-error {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+            padding: 10px;
+            background: rgba(255,0,0,0.1);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">ZEROBAN GAMING</div>
+        <div id="timerDisplay" class="timer-display">
+            <div class="time-counter">Inactive Time: <span id="inactiveTimeCounter">0s</span></div>
+        </div>
+        <div class="messages">
+            <div class="message">Please watch the full video and stay inactive on the site for at least 1 minute and 20 seconds to continue</div>
+            <div class="message">يرجى مشاهدة الفيديو كاملاً والبقاء غير نشط على الموقع لمدة دقيقة و20 ثانية على الأقل للمتابعة</div>
+            <div class="message">Permaneça inativo no site por pelo menos 1 minuto e 20 segundos para continuar</div>
+        </div>
+        <div class="link-box" onclick="startTimer('https://www.youtube.com/@zerobangaming')">
+            <svg class="link-icon" viewBox="0 0 24 24">
+                <path d="M13 3l3.293 3.293-7 7 1.414 1.414 7-7L21 11V3z"/>
+                <path d="M19 19H5V5h7l-2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-5l-2-2v7z"/>
+            </svg>
+            <div class="timer">Click to open website</div>
+        </div>
+        <div id="passwordContainer" class="password-container">
+            <input type="text" id="passwordInput" class="password-input" placeholder="Enter Password">
+            <button id="submitPassword" onclick="checkPassword()" class="downloadBtn">Submit</button>
+            <div id="errorMessage" class="error-message">Incorrect password. Please try again.</div>
+        </div>
+        <div id="downloadError" class="download-error">
+            Please complete both requirements: Watch the full video AND stay inactive for 1 minute and 20 seconds, then enter the correct password.
+        </div>
+        <button id="downloadBtn" onclick="downloadFile()" style="display: none;">
+            Download Now
+        </button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
